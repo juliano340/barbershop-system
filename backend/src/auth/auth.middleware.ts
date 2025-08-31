@@ -8,19 +8,17 @@ export function authMiddleware(
   res: Response,
   next: NextFunction
 ) {
-  const authHeader = req.headers["authorization"];
-  const token = authHeader && authHeader.split(" ")[1];
+  const token = req.cookies?.token;
 
   if (!token) {
-    return res.status(401).json({ error: "Acesso não autorizado!" });
+    return res.status(401).json({ error: "Token não fornecido" });
   }
 
   try {
     const payload = jwt.verify(token, SECRET);
-
     (req as any).user = payload;
     next();
-  } catch (error) {
+  } catch {
     return res.status(403).json({ error: "Token inválido ou expirado" });
   }
 }
