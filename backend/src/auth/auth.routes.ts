@@ -4,6 +4,36 @@ import jwt from "jsonwebtoken";
 
 const router = Router();
 
+/**
+ * @openapi
+ * /auth/login:
+ *   post:
+ *     summary: Login de usuário
+ *     tags:
+ *       - Auth
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - email
+ *               - password
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 example: user@example.com
+ *               password:
+ *                 type: string
+ *                 example: 123456
+ *     responses:
+ *       200:
+ *         description: Login realizado com sucesso
+ *       400:
+ *         description: Usuário ou senha inválidos
+ */
+
 router.post("/login", (req, res) => authController.login(req, res));
 router.post("/logout", (req, res) => {
   res.clearCookie("token", {
