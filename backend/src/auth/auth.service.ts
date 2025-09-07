@@ -7,20 +7,31 @@ const SECRET = process.env.JWT_SECRET;
 class AuthService {
   async login(email: string, password: string) {
     const user = await userRepository.findByEmail(email);
-    if (!user) {
+
+    function throwInvalidCredentialsError() {
       const error: any = new Error("Usuário ou senha inválidos");
       error.status = 400;
-      error.stack = "";
+      error.stack = "Usuário ou senha inválidos";
+      error.response = { message: "Usuário ou senha inválidos" };
       throw error;
     }
 
-    const isValid = await bcrypt.compare(password, user.password);
+    if (!user || !user.password) {
+      throwInvalidCredentialsError();
+    }
+
+    const isValid = await bcrypt.compare(password, user!.password);
+
     if (!isValid) {
-      throw new Error("Usuário ou senha inválidos");
+      throwInvalidCredentialsError();
     }
 
     if (!SECRET) {
       throw new Error("Erro no ambiente do servidor. Tente mais tarde!");
+    }
+
+    if (!user) {
+      return { token: "" };
     }
 
     const token = jwt.sign(
