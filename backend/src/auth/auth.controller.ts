@@ -3,22 +3,18 @@ import { authService } from "./auth.service.js";
 
 class AuthController {
   async login(req: Request, res: Response) {
-    try {
-      const { email, password } = req.body;
-      const { token } = await authService.login(email, password);
+    const { email, password } = req.body;
+    const { token } = await authService.login(email, password);
 
-      res.cookie("token", token, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: process.env.NODE_ENV === "production" ? "strict" : "lax",
-        path: "/",
-        domain: process.env.DOMAIN,
-        maxAge: 1000 * 60 * 60,
-      });
-      return res.json({ message: "Login realizado com sucesso" });
-    } catch (error: any) {
-      return res.status(400).json({ error: error.message });
-    }
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: process.env.NODE_ENV === "production" ? "strict" : "lax",
+      path: "/",
+      domain: process.env.DOMAIN,
+      maxAge: 1000 * 60 * 60,
+    });
+    return res.json({ message: "Login realizado com sucesso" });
   }
 }
 

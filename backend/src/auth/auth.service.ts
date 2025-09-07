@@ -8,7 +8,10 @@ class AuthService {
   async login(email: string, password: string) {
     const user = await userRepository.findByEmail(email);
     if (!user) {
-      throw new Error("Usuário ou senha inválidos");
+      const error: any = new Error("Usuário ou senha inválidos");
+      error.status = 400;
+      error.stack = "";
+      throw error;
     }
 
     const isValid = await bcrypt.compare(password, user.password);
