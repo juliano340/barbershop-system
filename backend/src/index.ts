@@ -67,6 +67,7 @@ const swaggerOptions = {
 
 const swaggerSpec = swaggerJsdoc(swaggerOptions);
 
+app.get("/", (req, res) => res.redirect("/docs"));
 // Rota da documentação
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
