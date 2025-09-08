@@ -9,12 +9,9 @@ class AuthController {
     res.cookie("token", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      // sameSite: process.env.NODE_ENV === "production" ? "strict" : "lax",
-      sameSite: "none",
-
+      sameSite: process.env.NODE_ENV === "production" ? "strict" : "lax",
       path: "/",
-      // domain: process.env.DOMAIN,
-      domain: ".juliano340.com",
+      domain: process.env.DOMAIN,
       maxAge: 1000 * 60 * 60,
     });
     return res.json({ message: "Login realizado com sucesso" });
