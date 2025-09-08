@@ -13,7 +13,8 @@ class AuthController {
       sameSite: "none",
 
       path: "/",
-      domain: process.env.DOMAIN,
+      // domain: process.env.DOMAIN,
+      domain: ".juliano340.com",
       maxAge: 1000 * 60 * 60,
     });
     return res.json({ message: "Login realizado com sucesso" });
