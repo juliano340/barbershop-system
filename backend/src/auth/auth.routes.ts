@@ -32,6 +32,26 @@ const router = Router();
  *         description: Login realizado com sucesso
  *       400:
  *         description: Usuário ou senha inválidos
+ *
+ * /auth/logout:
+ *   post:
+ *     summary: Logout do usuário
+ *     tags:
+ *       - Auth
+ *     responses:
+ *       200:
+ *         description: Logout realizado com sucesso
+ *
+ * /auth/me:
+ *   get:
+ *     summary: Retorna informações do usuário autenticado
+ *     tags:
+ *       - Auth
+ *     responses:
+ *       200:
+ *         description: Informações do usuário autenticado
+ *       401:
+ *         description: Não autenticado ou token inválido
  */
 
 router.post("/login", (req, res) => authController.login(req, res));
